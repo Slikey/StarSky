@@ -6,14 +6,29 @@
 #include <FastLED.h>
 #include "FastLED_RGBW.hpp"
 
-class StarLightClass {
+class StarLightDotsClass {
   private:
     CRGBW leds[LIGHT_DOTS_NUM_LEDS];
     CRGB *ledsRGB = (CRGB *) leds;
-    int lastModCount;
     long lastStarColorUpdate;
-
+  public:
+    void setup();
+    void loop();
     void starColor();
+};
+
+class StarLightBacklightClass {
+  public:
+    void setup();
+    void loop();
+};
+
+class StarLightClass {
+  private:
+    StarLightDotsClass dots;
+    StarLightBacklightClass backlight;
+    int lastModCount;
+
   public:
     void setup();
     void loop();

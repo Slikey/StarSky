@@ -48,8 +48,8 @@ void StarStorageClass::incBrightness(int value) {
 
 void StarStorageClass::setBrightness(int brightness) {
   int old = this->data.brightness;
-  if (brightness > 100) brightness = 100;
-  else if (brightness < 0) brightness = 0;
+  if (brightness > 110) brightness = 110;
+  else if (brightness < -10) brightness = -10;
   if (brightness == old) return;
   this->data.brightness = brightness;
   this->data.modCount++;

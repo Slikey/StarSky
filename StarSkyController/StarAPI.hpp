@@ -10,7 +10,6 @@ class StarAPIClass {
   private:
     WiFiUDP udp;
     char packet[512];
-    
 
     void handleRequest();
     void handleBrightness();
