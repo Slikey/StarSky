@@ -1,6 +1,7 @@
 #include "StarAPI.hpp"
 
 void StarAPIClass::sendRequest() {
+  StarWiFi.awaitConnection();
   Serial.printf("[API] Sending: %s...", request);
   udp.beginPacket(API_HOST, API_PORT);
   udp.write(request);
