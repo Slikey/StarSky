@@ -9,23 +9,31 @@ void StarAPIClass::setup() {
 void StarAPIClass::loop() {
   int packet_size = udp.parsePacket();
   if (packet_size) {
+#ifdef API_DEBUG
     Serial.printf("[StarAPI] Received %d bytes from %s, port %d\n", packet_size,
                   udp.remoteIP().toString().c_str(), udp.remotePort());
+#endif
     int len = udp.read(packet, 511);
     if (len > 0) packet[len] = 0;
     handleRequest();
+#ifdef API_DEBUG
     Serial.println();
+#endif
   }
 }
 
 void StarAPIClass::handleRequest() {
+#ifdef API_DEBUG
   Serial.printf("[StarAPI] Handling: %s\n", packet);
+#endif
   if (strncmp(packet, "brightness ", 11) == 0) {
     handleBrightness();
   } else if (strncmp(packet, "toggle", 6) == 0) {
     handleToggle();
   } else {
+#ifdef API_DEBUG
     Serial.printf("[StarAPI] NO HANDLER: %s\n", packet);
+#endif
   }
 }
 

@@ -1,7 +1,7 @@
 #ifndef CONFIG_HEADER
 #define CONFIG_HEADER
 
-#define API_DEBUG
+//#define API_DEBUG
 #define API_WIFI_SSID "Sternhimmel-API"
 #define API_WIFI_PASS "f8d3d686385ffd4a07e216625fb048f0"
 #define API_LOCAL_IP 192,168,4,1
@@ -11,6 +11,12 @@
 
 #define STORAGE_DELAY (5 * 1000)
 #define STORAGE_EEPROM_SIZE 64
+
+#define FASTLED_ALLOW_INTERRUPTS 0
+#define LIGHT_DOTS_NUM_LEDS 60
+#define LIGHT_DOTS_BRIGHTNESS 255
+#define LIGHT_DOTS_DATA_PIN 5
+
 
 #endif
 
