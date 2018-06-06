@@ -6,6 +6,8 @@ void StarWiFiClass::setup() {
   WiFi.disconnect(true);
   Serial.println("[WiFi] Cleared!");
 
+  WiFi.persistent(false);
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(API_WIFI_SSID, API_WIFI_PASS);
   Serial.println("[WiFi] Setup Connection:");

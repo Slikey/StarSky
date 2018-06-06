@@ -2,6 +2,7 @@
 #define STAR_API_HEADER
 
 #include "config.h"
+#include "StarWiFi.hpp"
 #include <WiFiUdp.h>
 
 class StarAPIClass {
