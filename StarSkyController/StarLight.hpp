@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "StarStorage.hpp"
+#include "StarLED.hpp"
 #include <FastLED.h>
 #include "FastLED_RGBW.hpp"
 

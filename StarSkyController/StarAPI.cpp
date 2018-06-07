@@ -40,6 +40,11 @@ void StarAPIClass::handleRequest() {
 void StarAPIClass::handleBrightness() {
   const char* number = packet + 11;
   long num = strtol(number, NULL, 11);
+  if (num < 0) {
+    num = -(num * num);
+  } else {
+    num = num * num;
+  }
   StarStorage.incBrightness(num);
 }
 

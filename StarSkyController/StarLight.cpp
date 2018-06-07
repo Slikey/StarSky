@@ -27,7 +27,7 @@ void StarLightDotsClass::starColor() {
   for (int i = 0; i < LIGHT_DOTS_NUM_LEDS; i++) {
     uint8_t hue = (i * 256 / LIGHT_DOTS_NUM_LEDS + hue / 10) & 0xFF;
     leds[i] = CHSV(hue, 255, 255);
-    leds[i].w = (w + i * 2) < 128 ? 0 : (w + i * 2) * 2;
+    //leds[i].w = (w + i * 2) < 128 ? 0 : (w + i * 2) * 2;
   }
   hue++;
   w++;
