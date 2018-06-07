@@ -23,10 +23,17 @@ class StarLightBacklightClass {
     void loop();
 };
 
+class StarLightMainClass {
+  public:
+    void setup();
+    void loop();
+};
+
 class StarLightClass {
   private:
     StarLightDotsClass dots;
     StarLightBacklightClass backlight;
+    StarLightMainClass main;
     int lastModCount;
 
   public:

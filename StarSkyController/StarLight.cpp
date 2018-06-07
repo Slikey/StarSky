@@ -1,22 +1,22 @@
 #include "StarLight.hpp"
 
 void StarLightDotsClass::setup() {
+  Serial.printf("[Light-Dots] Pin: %d\n", LIGHT_DOTS_DATA_PIN);
   lastStarColorUpdate = millis();
   FastLED.addLeds<WS2812B, LIGHT_DOTS_DATA_PIN, RGB>(ledsRGB, getRGBWsize(LIGHT_DOTS_NUM_LEDS));
-  FastLED.show();
 }
 
 void StarLightDotsClass::loop() {
+  int brightness = 0;
   if (StarStorage.isEnabled()) {
     long msec = millis();
     long timeout = lastStarColorUpdate + 5;
     if (timeout < lastStarColorUpdate || timeout < msec) {
       starColor();
     }
-    FastLED.setBrightness(LIGHT_DOTS_BRIGHTNESS);
-  } else {
-    FastLED.setBrightness(0);
+    brightness = LIGHT_DOTS_BRIGHTNESS;
   }
+  FastLED.setBrightness(brightness);
   FastLED.show();
 }
 
@@ -34,6 +34,7 @@ void StarLightDotsClass::starColor() {
 }
 
 void StarLightBacklightClass::setup() {
+  Serial.printf("[Light-Backlight] Pin: %d\n", LIGHT_BACKLIGHT_PIN);
   ledcSetup(LIGHT_BACKLIGHT_CHANNEL, 5000, 8);
   ledcAttachPin(LIGHT_BACKLIGHT_PIN, LIGHT_BACKLIGHT_CHANNEL);
 }
@@ -48,13 +49,28 @@ void StarLightBacklightClass::loop() {
     pinVal = (int) (val * 255);
   }
   ledcWrite(LIGHT_BACKLIGHT_CHANNEL, pinVal);
-  Serial.printf("[Light] Set backlight level to %d.\n", pinVal);
+  Serial.printf("[Light-Backlight] Set backlight level to %d.\n", pinVal);
+}
+
+void StarLightMainClass::setup() {
+  Serial.printf("[Light-Main] Pin: %d\n", LIGHT_MAIN_PIN);
+  pinMode(LIGHT_MAIN_PIN, OUTPUT);
+}
+
+void StarLightMainClass::loop() {
+  int pinVal = LOW;
+  if (StarStorage.isEnabled() && StarStorage.getBrightness() > 100) {
+    pinVal = HIGH;
+  }
+  digitalWrite(LIGHT_MAIN_PIN, pinVal);
+  Serial.printf("[Light-Main] Value: %s\n", pinVal == HIGH ? "HIGH" : "LOW");
 }
 
 void StarLightClass::setup() {
   lastModCount = -1; // will always run the loop after boot
   dots.setup();
   backlight.setup();
+  main.setup();
 }
 
 void StarLightClass::loop() {
@@ -64,6 +80,7 @@ void StarLightClass::loop() {
 
     dots.loop();
     backlight.loop();
+    main.loop();
   }
 }
 
