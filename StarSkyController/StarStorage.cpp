@@ -54,7 +54,7 @@ void StarStorageClass::setBrightness(int brightness) {
   this->data.brightness = brightness;
   this->data.modCount++;
   this->dirty();
-  Serial.printf("[StarAPI] Brightness changed from %d to %d\n", old, brightness);
+  Serial.printf("[StarStorage] Brightness changed from %d to %d\n", old, brightness);
 }
 
 bool StarStorageClass::isEnabled() {

@@ -58,9 +58,10 @@ void StarLightMainClass::setup() {
 }
 
 void StarLightMainClass::loop() {
-  int pinVal = LOW;
+  // Pin 5 is inverted :(
+  int pinVal = HIGH;
   if (StarStorage.isEnabled() && StarStorage.getBrightness() > 100) {
-    pinVal = HIGH;
+    pinVal = LOW;
   }
   digitalWrite(LIGHT_MAIN_PIN, pinVal);
   Serial.printf("[Light-Main] Value: %s\n", pinVal == HIGH ? "HIGH" : "LOW");
