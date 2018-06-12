@@ -1,16 +1,15 @@
-#ifndef STAR_LIGHT_HEADER
-#define STAR_LIGHT_HEADER
+#pragma once
 
 #include "config.h"
 #include "StarStorage.hpp"
-#include <FastLED.h>
-#include "FastLED_RGBW.hpp"
+
+#include <NeoPixelBus.h>
+#include <NeoPixelAnimator.h>
 
 class StarLightDotsClass {
   private:
-    CRGBW leds[LIGHT_DOTS_NUM_LEDS];
-    CRGB *ledsRGB = (CRGB *) leds;
     long lastStarColorUpdate;
+    bool lastEnabled;
   public:
     void setup();
     void loop();
@@ -42,5 +41,3 @@ class StarLightClass {
 };
 
 extern StarLightClass StarLight;
-
-#endif

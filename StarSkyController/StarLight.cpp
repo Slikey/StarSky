@@ -1,36 +1,45 @@
 #include "StarLight.hpp"
 
+NeoPixelBus<NeoGrbwFeature, Neo800KbpsMethod> strip(LIGHT_DOTS_NUM_LEDS, LIGHT_DOTS_DATA_PIN);
+    
 void StarLightDotsClass::setup() {
   Serial.printf("[Light-Dots] Pin: %d\n", LIGHT_DOTS_DATA_PIN);
   lastStarColorUpdate = millis();
-  FastLED.addLeds<WS2812B, LIGHT_DOTS_DATA_PIN, RGB>(ledsRGB, getRGBWsize(LIGHT_DOTS_NUM_LEDS));
+  lastEnabled = StarStorage.isEnabled();
+  strip.Begin();
+  strip.Show();
 }
 
 void StarLightDotsClass::loop() {
-  int brightness = 0;
+  uint8_t brightness;
   if (StarStorage.isEnabled()) {
     long msec = millis();
-    long timeout = lastStarColorUpdate + 5;
-    if (timeout < lastStarColorUpdate || timeout < msec) {
+    long timeout = lastStarColorUpdate + 10;
+    if (timeout <= lastStarColorUpdate || timeout < msec) {
       starColor();
+      lastStarColorUpdate = msec;
     }
-    brightness = LIGHT_DOTS_BRIGHTNESS;
+    strip.Show();
+  } else if (lastEnabled) {
+    for (int i = 0; i < LIGHT_DOTS_NUM_LEDS; i++) {
+      strip.SetPixelColor(i, 0);
+    }
+    strip.Show();
   }
-  FastLED.setBrightness(brightness);
-  FastLED.show();
+  lastEnabled = StarStorage.isEnabled();
 }
 
 void StarLightDotsClass::starColor() {
-  static uint16_t hue;
-  static uint8_t w;
-
-  for (int i = 0; i < LIGHT_DOTS_NUM_LEDS; i++) {
-    uint8_t hue = (i * 256 / LIGHT_DOTS_NUM_LEDS + hue / 10) & 0xFF;
-    leds[i] = CHSV(hue, 255, 255);
-    leds[i].w = (w + i * 2) < 128 ? 0 : (w + i * 2) * 2;
+  static uint8_t hue;
+  static const float led_step = 1.0f / LIGHT_DOTS_NUM_LEDS;
+  float offset = (float) hue / 255;
+  for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; i++) {
+    float h = led_step * i + offset;
+    HsbColor rgb = HsbColor(h, 1.0f, 1.0f);
+    RgbwColor rgbw(rgb);
+    strip.SetPixelColor(i, rgbw);
   }
-  hue++;
-  w++;
+  ++hue;
 }
 
 void StarLightBacklightClass::setup() {
@@ -75,11 +84,12 @@ void StarLightClass::setup() {
 }
 
 void StarLightClass::loop() {
+  dots.loop();
+
   int modCount = StarStorage.getModCount();
   if (modCount != lastModCount) {
     lastModCount = modCount;
 
-    dots.loop();
     backlight.loop();
     main.loop();
   }

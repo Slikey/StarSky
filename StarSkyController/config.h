@@ -1,5 +1,4 @@
-#ifndef CONFIG_HEADER
-#define CONFIG_HEADER
+#pragma once
 
 //#define API_DEBUG
 #define API_WIFI_SSID "Sternhimmel-API"
@@ -12,15 +11,11 @@
 #define STORAGE_DELAY (5 * 1000)
 #define STORAGE_EEPROM_SIZE 64
 
-#define FASTLED_ALLOW_INTERRUPTS 0
-#define LIGHT_DOTS_NUM_LEDS 60
+#define LIGHT_DOTS_NUM_LEDS 100
 #define LIGHT_DOTS_BRIGHTNESS 255
-#define LIGHT_DOTS_DATA_PIN A4
-#define LIGHT_BACKLIGHT_PIN A5
+#define LIGHT_DOTS_DATA_PIN 18
+#define LIGHT_BACKLIGHT_PIN 5
 #define LIGHT_BACKLIGHT_CHANNEL 0
 // PIN 5 = Onboard LED
-#define LIGHT_MAIN_PIN 5
-
-
-#endif
+#define LIGHT_MAIN_PIN A5
 

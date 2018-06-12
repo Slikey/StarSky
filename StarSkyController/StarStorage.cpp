@@ -32,6 +32,17 @@ void StarStorageClass::loop() {
   long timeout = this->lastUpdate + STORAGE_DELAY;
   // check if timeout overflows OR timeout elapsed
   if (this->lastUpdate > timeout || timeout > millis()) return;
+
+  // when storing values we make them
+  if (this->data.brightness > 100) {
+    this->data.brightness = 110;
+    this->data.modCount++;
+  }
+  if (this->data.brightness <= 0) {
+    this->data.brightness = -10;
+    this->data.modCount++;
+  }
+
   EEPROM.writeBytes(0, &this->data, sizeof(StarStorageData_t));
   EEPROM.commit();
   Serial.printf("[Storage] Written %d.\n", this->data.brightness);

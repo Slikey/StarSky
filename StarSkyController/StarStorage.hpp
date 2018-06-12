@@ -1,5 +1,4 @@
-#ifndef STORAGE_HEADER
-#define STORAGE_HEADER
+#pragma once
 
 #include "config.h"
 #include <WiFi.h>
@@ -31,6 +30,4 @@ class StarStorageClass {
 };
 
 extern StarStorageClass StarStorage;
-
-#endif
 
