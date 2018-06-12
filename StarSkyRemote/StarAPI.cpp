@@ -19,4 +19,9 @@ void StarAPIClass::requestToggle() {
   sendRequest();
 }
 
+void StarAPIClass::requestMode() {
+  strcpy(request, "mode");
+  sendRequest();
+}
+
 StarAPIClass StarAPI;

@@ -92,6 +92,10 @@ void StarStorageClass::setStarMode(uint8_t starMode) {
   Serial.printf("[Request] Set StarMode to %d\n", starMode);
 }
 
+void StarStorageClass::incStarMode() {
+  setStarMode(getStarMode() + 1);
+}
+
 uint32_t StarStorageClass::getModCount() {
   return data.modCount;
 }

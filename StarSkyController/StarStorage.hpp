@@ -29,6 +29,7 @@ class StarStorageClass {
     void setEnabled(bool enabled);
     uint8_t getStarMode();
     void setStarMode(uint8_t mode);
+    void incStarMode();
     uint32_t getModCount();
 };
 

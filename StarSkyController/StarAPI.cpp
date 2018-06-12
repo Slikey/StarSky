@@ -30,6 +30,8 @@ void StarAPIClass::handleRequest() {
     handleBrightness();
   } else if (strncmp(packet, "toggle", 6) == 0) {
     handleToggle();
+  } else if (strncmp(packet, "mode", 4) == 0) {
+    handleMode();
   } else {
 #ifdef API_DEBUG
     Serial.printf("[StarAPI] NO HANDLER: %s\n", packet);
@@ -52,6 +54,10 @@ void StarAPIClass::handleToggle() {
   bool enabled = StarStorage.isEnabled();
   enabled = enabled ? 0 : 1;
   StarStorage.setEnabled(enabled);
+}
+
+void StarAPIClass::handleMode() {
+  StarStorage.incStarMode();
 }
 
 StarAPIClass StarAPI;

@@ -13,6 +13,7 @@ class StarAPIClass {
   public:
     void requestIncBrightness(int val);
     void requestToggle();
+    void requestMode();
 };
 
 extern StarAPIClass StarAPI;
