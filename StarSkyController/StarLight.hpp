@@ -2,7 +2,6 @@
 
 #include "config.h"
 #include "StarStorage.hpp"
-
 #include <NeoPixelBus.h>
 #include <NeoPixelAnimator.h>
 
