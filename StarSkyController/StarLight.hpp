@@ -1,17 +1,15 @@
-#ifndef STAR_LIGHT_HEADER
-#define STAR_LIGHT_HEADER
+#pragma once
 
 #include "config.h"
 #include "StarStorage.hpp"
-#include "StarLED.hpp"
+#include <Adafruit_NeoPixel.h>
 #include <FastLED.h>
-#include "FastLED_RGBW.hpp"
 
 class StarLightDotsClass {
   private:
-    CRGBW leds[LIGHT_DOTS_NUM_LEDS];
-    CRGB *ledsRGB = (CRGB *) leds;
     long lastStarColorUpdate;
+    bool lastEnabled;
+    Adafruit_NeoPixel strip = Adafruit_NeoPixel(LIGHT_DOTS_NUM_LEDS, LIGHT_DOTS_DATA_PIN, NEO_GRB + NEO_KHZ400);
   public:
     void setup();
     void loop();
@@ -43,5 +41,3 @@ class StarLightClass {
 };
 
 extern StarLightClass StarLight;
-
-#endif

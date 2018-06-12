@@ -1,5 +1,4 @@
-#ifndef STAR_API_HEADER
-#define STAR_API_HEADER
+#pragma once
 
 #include "config.h"
 #include "StarStorage.hpp"
@@ -20,5 +19,3 @@ class StarAPIClass {
 };
 
 extern StarAPIClass StarAPI;
-
-#endif

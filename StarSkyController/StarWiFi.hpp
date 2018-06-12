@@ -1,5 +1,4 @@
-#ifndef STAR_WIFI_HEADER
-#define STAR_WIFI_HEADER
+#pragma once
 
 #include "config.h"
 #include <WiFi.h>
@@ -10,6 +9,4 @@ class StarWiFiClass {
 };
 
 extern StarWiFiClass StarWiFi;
-
-#endif
 

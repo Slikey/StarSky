@@ -3,21 +3,31 @@
 void StarLightDotsClass::setup() {
   Serial.printf("[Light-Dots] Pin: %d\n", LIGHT_DOTS_DATA_PIN);
   lastStarColorUpdate = millis();
-  FastLED.addLeds<WS2812B, LIGHT_DOTS_DATA_PIN, RGB>(ledsRGB, getRGBWsize(LIGHT_DOTS_NUM_LEDS));
+  lastEnabled = StarStorage.isEnabled();
+  strip.begin();
+  strip.show();
 }
 
 void StarLightDotsClass::loop() {
-  int brightness = 0;
+  uint8_t brightness;
   if (StarStorage.isEnabled()) {
     long msec = millis();
-    long timeout = lastStarColorUpdate + 5;
+    long timeout = lastStarColorUpdate + 10;
     if (timeout < lastStarColorUpdate || timeout < msec) {
       starColor();
     }
-    brightness = LIGHT_DOTS_BRIGHTNESS;
+    strip.setBrightness(LIGHT_DOTS_BRIGHTNESS);
+    strip.show();
+  } else if (lastEnabled) {
+    for (int x = 0; x < 3; ++x) {
+      for (int i = 0; i < LIGHT_DOTS_NUM_LEDS; i++) {
+        strip.setPixelColor(i, 0);
+      }
+      strip.setBrightness(0);
+      strip.show();
+    }
   }
-  FastLED.setBrightness(brightness);
-  FastLED.show();
+  lastEnabled = StarStorage.isEnabled();
 }
 
 void StarLightDotsClass::starColor() {
@@ -25,8 +35,9 @@ void StarLightDotsClass::starColor() {
   static uint8_t w;
 
   for (int i = 0; i < LIGHT_DOTS_NUM_LEDS; i++) {
-    uint8_t hue = (i * 256 / LIGHT_DOTS_NUM_LEDS + hue / 10) & 0xFF;
-    leds[i] = CHSV(hue, 255, 255);
+    uint8_t h = (i * 256 / LIGHT_DOTS_NUM_LEDS + hue / 10) & 0xFF;
+    CRGB rgb = CHSV(h, 255, 255);
+    strip.setPixelColor(i, rgb.r, rgb.g, rgb.b);
     //leds[i].w = (w + i * 2) < 128 ? 0 : (w + i * 2) * 2;
   }
   hue++;
@@ -75,11 +86,12 @@ void StarLightClass::setup() {
 }
 
 void StarLightClass::loop() {
+  dots.loop();
+
   int modCount = StarStorage.getModCount();
   if (modCount != lastModCount) {
     lastModCount = modCount;
 
-    dots.loop();
     backlight.loop();
     main.loop();
   }
