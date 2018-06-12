@@ -7,7 +7,8 @@
 typedef struct {
   int brightness;
   bool enabled;
-  int modCount;
+  uint32_t modCount;
+  uint8_t starMode;
 } StarStorageData_t;
 
 class StarStorageClass {
@@ -26,7 +27,9 @@ class StarStorageClass {
     void setBrightness(int brightness);
     bool isEnabled();
     void setEnabled(bool enabled);
-    int getModCount();
+    uint8_t getStarMode();
+    void setStarMode(uint8_t mode);
+    uint32_t getModCount();
 };
 
 extern StarStorageClass StarStorage;

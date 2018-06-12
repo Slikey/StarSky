@@ -1,45 +1,51 @@
 #include "StarLight.hpp"
 
-NeoPixelBus<NeoGrbwFeature, Neo800KbpsMethod> strip(LIGHT_DOTS_NUM_LEDS, LIGHT_DOTS_DATA_PIN);
-    
+StarLightMode::StarLightMode(uint32_t timeout) {
+  this->timeout = timeout;
+}
+
+uint32_t StarLightMode::getTimeout() {
+  return timeout;
+}
+
+StarLightDotsClass::StarLightDotsClass() : strip(LIGHT_DOTS_NUM_LEDS, LIGHT_DOTS_DATA_PIN) {}
+
 void StarLightDotsClass::setup() {
   Serial.printf("[Light-Dots] Pin: %d\n", LIGHT_DOTS_DATA_PIN);
   lastStarColorUpdate = millis();
   lastEnabled = StarStorage.isEnabled();
+  for (auto it = modeList.begin(); it != modeList.end(); ++it) {
+    (*it)->setup();
+  }
   strip.Begin();
-  strip.Show();
 }
 
 void StarLightDotsClass::loop() {
-  uint8_t brightness;
   if (StarStorage.isEnabled()) {
-    long msec = millis();
-    long timeout = lastStarColorUpdate + 10;
+    const uint32_t msec = millis();
+    uint8_t modeIdx = StarStorage.getStarMode();
+    if (modeIdx >= modeList.size()) {
+      StarStorage.setStarMode(modeIdx = 0);
+    }
+    StarLightMode *starLightMode = modeList[modeIdx];
+    const uint32_t timeout = lastStarColorUpdate + starLightMode->getTimeout();
     if (timeout <= lastStarColorUpdate || timeout < msec) {
-      starColor();
+      starLightMode->loop();
+      for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; ++i)
+        strip.SetPixelColor(i, starLightMode->color(i));
       lastStarColorUpdate = msec;
     }
     strip.Show();
   } else if (lastEnabled) {
-    for (int i = 0; i < LIGHT_DOTS_NUM_LEDS; i++) {
+    for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; ++i)
       strip.SetPixelColor(i, 0);
-    }
     strip.Show();
   }
   lastEnabled = StarStorage.isEnabled();
 }
 
-void StarLightDotsClass::starColor() {
-  static uint8_t hue;
-  static const float led_step = 1.0f / LIGHT_DOTS_NUM_LEDS;
-  float offset = (float) hue / 255;
-  for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; i++) {
-    float h = led_step * i + offset;
-    HsbColor rgb = HsbColor(h, 1.0f, 1.0f);
-    RgbwColor rgbw(rgb);
-    strip.SetPixelColor(i, rgbw);
-  }
-  ++hue;
+void StarLightDotsClass::addMode(StarLightMode *starMode) {
+  modeList.push_back(starMode);
 }
 
 void StarLightBacklightClass::setup() {
@@ -93,6 +99,10 @@ void StarLightClass::loop() {
     backlight.loop();
     main.loop();
   }
+}
+
+StarLightDotsClass &StarLightClass::getDots() {
+  return dots;
 }
 
 StarLightClass StarLight;

@@ -11,46 +11,47 @@ void StarStorageClass::setup() {
   }
   Serial.println(" done!");
 
-  EEPROM.readBytes(0, &this->data, sizeof(StarStorageData_t));
+  EEPROM.readBytes(0, &data, sizeof(StarStorageData_t));
   Serial.println("[Storage] Reading from EEPROM:");
-  Serial.printf("[Storage] Brightness: %d\n", this->data.brightness);
-  Serial.printf("[Storage] Enabled: %s\n", this->data.enabled ? "true" : "false");
+  Serial.printf("[Storage] Brightness: %d\n", data.brightness);
+  Serial.printf("[Storage] Enabled: %s\n", data.enabled ? "true" : "false");
+  Serial.printf("[Storage] StarMode: %d\n", data.starMode);
 
-  this->initialised = true;
-  this->lastUpdate = millis();
-  this->comitted = true;
+  initialised = true;
+  lastUpdate = millis();
+  comitted = true;
 }
 
 void StarStorageClass::dirty() {
-  this->lastUpdate = millis();
-  this->comitted = false;
+  lastUpdate = millis();
+  comitted = false;
 }
 
 void StarStorageClass::loop() {
-  if (!this->initialised) return;
-  if (this->comitted) return;
+  if (!initialised) return;
+  if (comitted) return;
   long timeout = this->lastUpdate + STORAGE_DELAY;
   // check if timeout overflows OR timeout elapsed
-  if (this->lastUpdate > timeout || timeout > millis()) return;
+  if (lastUpdate > timeout || timeout > millis()) return;
 
   // when storing values we make them
-  if (this->data.brightness > 100) {
-    this->data.brightness = 110;
-    this->data.modCount++;
+  if (data.brightness > 100) {
+    data.brightness = 110;
+    data.modCount++;
   }
-  if (this->data.brightness <= 0) {
-    this->data.brightness = -10;
-    this->data.modCount++;
+  if (data.brightness <= 0) {
+    data.brightness = -10;
+    data.modCount++;
   }
 
-  EEPROM.writeBytes(0, &this->data, sizeof(StarStorageData_t));
+  EEPROM.writeBytes(0, &data, sizeof(StarStorageData_t));
   EEPROM.commit();
-  Serial.printf("[Storage] Written %d.\n", this->data.brightness);
-  this->comitted = true;
+  Serial.printf("[Storage] Written %d.\n", data.brightness);
+  comitted = true;
 }
 
 int StarStorageClass::getBrightness() {
-  return this->data.brightness;
+  return data.brightness;
 }
 
 void StarStorageClass::incBrightness(int value) {
@@ -58,30 +59,41 @@ void StarStorageClass::incBrightness(int value) {
 }
 
 void StarStorageClass::setBrightness(int brightness) {
-  int old = this->data.brightness;
+  int old = data.brightness;
   if (brightness > 110) brightness = 110;
   else if (brightness < -10) brightness = -10;
   if (brightness == old) return;
-  this->data.brightness = brightness;
-  this->data.modCount++;
-  this->dirty();
+  data.brightness = brightness;
+  data.modCount++;
+  dirty();
   Serial.printf("[StarStorage] Brightness changed from %d to %d\n", old, brightness);
 }
 
 bool StarStorageClass::isEnabled() {
-  return this->data.enabled;
+  return data.enabled;
 }
 
 void StarStorageClass::setEnabled(bool enabled) {
-  if (enabled == this->data.enabled) return;
-  this->data.enabled = enabled;
-  this->dirty();
-  this->data.modCount++;
+  if (enabled == data.enabled) return;
+  data.enabled = enabled;
+  dirty();
+  data.modCount++;
   Serial.printf("[Request] Toggled light to %s\n", enabled ? "true" : "false");
 }
 
-int StarStorageClass::getModCount() {
-  return this->data.modCount;
+uint8_t StarStorageClass::getStarMode() {
+  return data.starMode;
+}
+
+void StarStorageClass::setStarMode(uint8_t starMode) {
+  data.starMode = starMode;
+  dirty();
+  data.modCount++;
+  Serial.printf("[Request] Set StarMode to %d\n", starMode);
+}
+
+uint32_t StarStorageClass::getModCount() {
+  return data.modCount;
 }
 
 StarStorageClass StarStorage;
