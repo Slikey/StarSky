@@ -1,5 +1,4 @@
-#ifndef ROTARY_HEADER
-#define ROTARY_HEADER
+#pragma once
 
 #include "config.h"
 
@@ -17,5 +16,3 @@ class StarRotaryClass {
 };
 
 extern StarRotaryClass StarRotary;
-
-#endif

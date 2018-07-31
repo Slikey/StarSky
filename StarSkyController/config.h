@@ -1,6 +1,6 @@
 #pragma once
 
-//#define API_DEBUG
+#define API_DEBUG
 #define API_WIFI_SSID "Sternhimmel-API"
 #define API_WIFI_PASS "f8d3d686385ffd4a07e216625fb048f0"
 #define API_LOCAL_IP 192,168,4,1

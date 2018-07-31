@@ -24,4 +24,9 @@ void StarAPIClass::requestMode() {
   sendRequest();
 }
 
+void StarAPIClass::requestButton(int val) {
+  snprintf(request, 511, "button %d", val);
+  sendRequest();
+}
+
 StarAPIClass StarAPI;

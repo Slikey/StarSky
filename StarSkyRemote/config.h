@@ -1,5 +1,4 @@
-#ifndef CONFIG_HEADER
-#define CONFIG_HEADER
+#pragma once
 
 #include <ESP8266WiFi.h>
 
@@ -13,4 +12,5 @@
 #define ROTARY_2_PIN D6
 #define ROTARY_BUTTON_PIN D7
 
-#endif
+#define BUTTON_LEFT_PIN D2
+#define BUTTON_RIGHT_PIN D3

@@ -13,6 +13,8 @@ class StarAPIClass {
     void handleRequest();
     void handleBrightness();
     void handleToggle();
+    void handleButton();
+    void handleMode();
   public:
     void setup();
     void loop();

@@ -32,6 +32,8 @@ void StarAPIClass::handleRequest() {
     handleToggle();
   } else if (strncmp(packet, "mode", 4) == 0) {
     handleMode();
+  } else if (strncmp(packet, "button", 6) == 0) {
+    handleButton();
   } else {
 #ifdef API_DEBUG
     Serial.printf("[StarAPI] NO HANDLER: %s\n", packet);
@@ -58,6 +60,14 @@ void StarAPIClass::handleToggle() {
 
 void StarAPIClass::handleMode() {
   StarStorage.incStarMode();
+}
+
+void StarAPIClass::handleButton() {
+  const char* number = packet + 7;
+  long num = strtol(number, NULL, 7);
+  if (num == 0) {
+    handleMode();
+  }
 }
 
 StarAPIClass StarAPI;

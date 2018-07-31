@@ -1,5 +1,4 @@
-#ifndef STAR_API_HEADER
-#define STAR_API_HEADER
+#pragma once
 
 #include "config.h"
 #include "StarWiFi.hpp"
@@ -14,8 +13,7 @@ class StarAPIClass {
     void requestIncBrightness(int val);
     void requestToggle();
     void requestMode();
+    void requestButton(int val);
 };
 
 extern StarAPIClass StarAPI;
-
-#endif
