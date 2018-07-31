@@ -13,13 +13,13 @@ void StarButtonClass::setup() {
 }
 
 void StarButtonClass::loop() {
-  btnLeftState = !digitalRead(BUTTON_LEFT_PIN);
+  btnLeftState = digitalRead(BUTTON_LEFT_PIN);
   if (btnLeftState != btnLeftLastState) {
     if (btnLeftState) btnLeftPressed = true;
     btnLeftLastState = btnLeftState;
   }
 
-  btnRightState = !digitalRead(BUTTON_RIGHT_PIN);
+  btnRightState = digitalRead(BUTTON_RIGHT_PIN);
   if (btnRightState != btnRightLastState) {
     if (btnRightState) btnRightPressed = true;
     btnRightLastState = btnRightState;

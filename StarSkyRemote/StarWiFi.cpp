@@ -22,7 +22,7 @@ void StarWiFiClass::awaitConnection() {
     while (WiFi.status() != WL_CONNECTED) {
       delay(500);
       Serial.print('.');
-      if (ticks++ == 20) Serial.println();
+      if (ticks++ % 20 == 0) Serial.println();
     }
     Serial.printf("\n[WiFi] Connected after %d ms!\n", millis() - msec);
   }

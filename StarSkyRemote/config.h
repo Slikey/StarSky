@@ -8,9 +8,11 @@
 #define API_HOST "192.168.4.1"
 #define API_PORT 3244
 
+// DO NOT USE D3 AT ALL!
+
 #define ROTARY_1_PIN D5
 #define ROTARY_2_PIN D6
 #define ROTARY_BUTTON_PIN D7
 
 #define BUTTON_LEFT_PIN D2
-#define BUTTON_RIGHT_PIN D3
+#define BUTTON_RIGHT_PIN D8

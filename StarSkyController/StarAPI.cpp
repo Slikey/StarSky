@@ -65,7 +65,7 @@ void StarAPIClass::handleMode() {
 void StarAPIClass::handleButton() {
   const char* number = packet + 7;
   long num = strtol(number, NULL, 7);
-  if (num == 0) {
+  if (num == 1) {
     handleMode();
   }
 }
