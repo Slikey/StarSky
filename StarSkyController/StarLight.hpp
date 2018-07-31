@@ -54,3 +54,21 @@ class StarLightClass {
 };
 
 extern StarLightClass StarLight;
+
+// LED ARRAY
+#define LED_ARRAY_STARS 0
+#define LED_ARRAY_HELLO_KITTY 1
+#define LED_ARRAY_PONY 2
+#define LED_ARRAY_SUNFLOWER 3
+#define LED_ARRAY_PIKA 4
+#define LED_ARRAY_HEART 5
+
+class LedArrayClass {
+  private:
+    uint8_t ids[LIGHT_DOTS_NUM_LEDS];
+  public:
+    void setup();
+    uint8_t get(uint16_t led);
+};
+
+extern LedArrayClass LedArray;

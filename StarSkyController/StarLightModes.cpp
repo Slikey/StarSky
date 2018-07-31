@@ -4,7 +4,7 @@
 // RainbowMode
 //
 
-RainbowMode::RainbowMode() : StarLightMode(10) {
+RainbowMode::RainbowMode() : StarLightMode(50) {
   hue = 0;
 }
 
@@ -24,18 +24,27 @@ RgbwColor RainbowMode::color(uint16_t index) {
 // WhiteSparkleMode
 //
 
-WhiteSparkleMode::WhiteSparkleMode()  : StarLightMode(10) {
-
+WhiteSparkleMode::WhiteSparkleMode()  : StarLightMode(50) {
 }
 
 void WhiteSparkleMode::setup() {
-  for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; ++i)
-    brightness[i] = (uint8_t) random(0xFF);
+  for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; ++i) {
+    if (LedArray.get(i) == 0) {
+      brightness[i] = 0; //(uint8_t) random(0xF); 
+    } else {
+      brightness[i] = 0xF;
+    }
+  }
 }
 
 void WhiteSparkleMode::loop() {
-  for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; ++i)
-    brightness[i] += (uint8_t) random(0xF);
+  for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; ++i) {
+    if (LedArray.get(i) == 0) {
+      brightness[i] = 0; //(uint8_t) random(0xF); 
+    } else {
+      brightness[i] = 0xFF;
+    }
+  }
 }
 
 RgbwColor WhiteSparkleMode::color(uint16_t index) {

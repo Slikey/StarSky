@@ -15,6 +15,7 @@ class RainbowMode : public StarLightMode {
 class WhiteSparkleMode : public StarLightMode {
   private:
     uint8_t brightness[LIGHT_DOTS_NUM_LEDS];
+    uint8_t count;
   public:
     WhiteSparkleMode();
     void setup();

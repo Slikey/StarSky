@@ -21,7 +21,7 @@ void loop() {
   long timeout = lastUpdate + 5;
   // check if timeout overflows OR timeout reached
   if (timeout < lastUpdate || timeout < msec) {
-    int ticks = StarRotary.getAndResetTicks();
+    int ticks = StarRotary.getAndResetTicks() * 2;
     if (ticks != 0) {
       StarAPI.requestIncBrightness(ticks);
     }

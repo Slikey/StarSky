@@ -7,22 +7,30 @@ void StarButtonClass::setup() {
 
   btnLeftLastState = digitalRead(BUTTON_LEFT_PIN);
   btnRightLastState = digitalRead(BUTTON_RIGHT_PIN);
-  btnLeftState = 0;
-  btnRightState = 0;
+  btnLeftState = btnRightState = 0;
+  btnLeftLastTime = btnRightLastTime = 0;
   Serial.println(" done!");
 }
 
 void StarButtonClass::loop() {
-  btnLeftState = digitalRead(BUTTON_LEFT_PIN);
-  if (btnLeftState != btnLeftLastState) {
-    if (btnLeftState) btnLeftPressed = true;
-    btnLeftLastState = btnLeftState;
+  long msec = millis();
+  
+  if (btnLeftLastTime + 500 < msec) {
+    btnLeftState = digitalRead(BUTTON_LEFT_PIN);
+    if (btnLeftState != btnLeftLastState) {
+      if (btnLeftState) btnLeftPressed = true;
+      btnLeftLastState = btnLeftState;
+      btnLeftLastTime = msec;
+    }
   }
 
-  btnRightState = digitalRead(BUTTON_RIGHT_PIN);
-  if (btnRightState != btnRightLastState) {
-    if (btnRightState) btnRightPressed = true;
-    btnRightLastState = btnRightState;
+  if (btnLeftLastTime + 500 < msec) {
+    btnRightState = digitalRead(BUTTON_RIGHT_PIN);
+    if (btnRightState != btnRightLastState) {
+      if (btnRightState) btnRightPressed = true;
+      btnRightLastState = btnRightState;
+      btnLeftLastTime = msec;
+    }
   }
 }
     

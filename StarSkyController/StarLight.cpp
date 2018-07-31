@@ -83,6 +83,7 @@ void StarLightMainClass::loop() {
 }
 
 void StarLightClass::setup() {
+  LedArray.setup();
   lastModCount = -1; // will always run the loop after boot
   dots.setup();
   backlight.setup();
@@ -106,3 +107,24 @@ StarLightDotsClass &StarLightClass::getDots() {
 }
 
 StarLightClass StarLight;
+
+// LED ARRAY
+
+void LedArrayClass::setup() {
+  for (uint16_t i = 0; i < LIGHT_DOTS_NUM_LEDS; ++i) {
+    ids[i] = LED_ARRAY_STARS;
+  }
+  for (uint16_t i = 3; i <= 6; ++i) {
+    ids[i] = LED_ARRAY_HELLO_KITTY;
+  }
+  ids[19] = ids[20] = ids[21] = ids[23] = ids[25] = ids[26] = ids[27] = ids[28] = LED_ARRAY_PONY;
+  ids[56] = ids[57] = ids[59] = ids[63] = ids[65] = ids[66] = ids[68] = ids[69] = ids[70] = ids[71] = ids[74] = ids[75] = ids[76] = ids[77] = ids[78] = LED_ARRAY_SUNFLOWER;
+  ids[85] = ids[86] = ids[87] = ids[89] = ids[96] = ids[98] = ids[101] = ids[108] = ids[109] = ids[110] = LED_ARRAY_PIKA;
+  ids[125] = LED_ARRAY_HEART;
+}
+
+uint8_t LedArrayClass::get(uint16_t led) {
+  return ids[led];
+}
+
+LedArrayClass LedArray;

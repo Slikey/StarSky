@@ -7,6 +7,7 @@ class StarButtonClass {
     bool btnLeftPressed, btnRightPressed;
     bool btnLeftState, btnRightState;
     bool btnLeftLastState, btnRightLastState;
+    long btnLeftLastTime, btnRightLastTime;
   public:
     void setup();
     void loop();
