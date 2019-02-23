@@ -17,12 +17,6 @@
 #define LIGHT_STARS_NUM 145
 #define LIGHT_STARS_BRIGHTNESS 255
 
-<<<<<<< HEAD
 #define LIGHT_BACKLIGHT_PIN D4
 
 #define LIGHT_SPOTS_PIN D3
-=======
-#define LIGHT_BACKLIGHT_PIN D5
-
-#define LIGHT_SPOTS_PIN D4
->>>>>>> 3307d50... More changes
