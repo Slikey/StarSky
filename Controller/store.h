@@ -20,7 +20,7 @@ static void mark_changed() {
   ++data.mod_count;
 }
 
-uint8_t storage_get_brightness() {
+int8_t storage_get_brightness() {
   return data.brightness;
 }
 
@@ -50,6 +50,7 @@ uint8_t storage_get_starmode() {
 
 void storage_set_starmode(uint8_t starmode) {
   if (starmode == data.starmode) return;
+  while (starmode >= LIGHT_STARS_MODES) starmode -= LIGHT_STARS_MODES;
   Sprintf("[Storage] StarMode changed from %d to %d\n", data.starmode, starmode);
   data.starmode = starmode;
   mark_changed();

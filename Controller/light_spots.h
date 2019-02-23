@@ -13,14 +13,14 @@ void light_spots_setup() {
 }
 
 void light_spots_loop(const uint32_t msec) {
-  int newValue = HIGH;
+  int newValue = LOW;
   if (storage_is_enabled() && storage_get_brightness() > 100) {
-    newValue = LOW;
+    newValue = HIGH;
   }
   if (light_spots.value != newValue) {
     light_spots.value = newValue;
     digitalWrite(LIGHT_SPOTS_PIN, newValue);
-    Sprintf("[LightSpots] Value: %s\n", newValue == HIGH ? "HIGH" : "LOW");
+    Sprintf("[LightSpots] Value: %s\n", newValue == HIGH ? "ON" : "OFF");
   }
 }
 

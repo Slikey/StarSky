@@ -83,7 +83,7 @@ RgbwColor mode_sparkle_color(uint16_t index) {
 // Bake
 //
 
-starmode_t *starmode_modes[2];
+starmode_t *starmode_modes[LIGHT_STARS_MODES];
 
 void light_modes_setup() {
   starmode_t *mode;
