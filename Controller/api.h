@@ -32,7 +32,7 @@ void api_setup() {
                     IPAddress(WIFI_AP_GATEWAY),
                     IPAddress(WIFI_AP_SUBNET_MASK));
   WiFi.softAP(WIFI_AP_SSID, WIFI_AP_PASSWORD, WIFI_CHANNEL, true, WIFI_AP_MAX_CONNECTIONS);
-  Sprint("[WIFI] IP: "); Serial.println(WiFi.softAPIP());
+  Sprint("[WIFI] IP: "); Sprintln(WiFi.softAPIP());
 
   Sprintf("[WIFI] Starting UDP on port %d\n", WIFI_UDP_PORT);
   api_udp.begin(WIFI_UDP_PORT);

@@ -27,9 +27,17 @@ void api_setup() {
   WiFi.persistent(false);
 
   WiFi.mode(WIFI_STA);
+  Sprint("[WIFI] Starting...");
   WiFi.begin(WIFI_AP_SSID, WIFI_AP_PASSWORD);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(100);
+    Sprint(".");
+  }
+  Sprintln("  done!");
+  Sprint("[WIFI] IP: "); Sprintln(WiFi.localIP());  
 
-  wifi_set_macaddr(STATION_IF, api_local_mac);
+  Sprintf("[WIFI] Starting UDP on port %d\n", WIFI_UDP_PORT);
+  api_udp.begin(WIFI_UDP_PORT);
 }
 
 void api_send_packet(starsky_packet_t *packet) {
@@ -37,6 +45,7 @@ void api_send_packet(starsky_packet_t *packet) {
   api_udp.beginPacket(IPAddress(WIFI_AP_LOCAL_IP), WIFI_UDP_PORT);
   api_udp.write((uint8_t*) packet, sizeof(starsky_packet_t));
   api_udp.endPacket();
+  Sprintln("[API] Sent packet!");
 }
 
 void api_loop(uint32_t msec) {

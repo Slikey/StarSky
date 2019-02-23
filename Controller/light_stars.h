@@ -14,8 +14,8 @@ struct light_stars_t {
 } light_stars;
 
 void light_stars_setup(starmode_t **modes, uint8_t modes_c) {
-  Sprintf("[LightStars] Pin: %d\n", LIGHT_STARS_DATA_PIN);
-  light_stars.strip = new NeoPixelBus<LIGHT_STARS_COLOR, LIGHT_STARS_METHOD>(LIGHT_STARS_NUM, LIGHT_STARS_DATA_PIN);
+  Sprintf("[LightStars] Pin: RX\n");
+  light_stars.strip = new NeoPixelBus<LIGHT_STARS_COLOR, LIGHT_STARS_METHOD>(LIGHT_STARS_NUM);
   light_stars.last_update = millis();
   light_stars.last_enabled = storage_is_enabled();
   light_stars.modes = modes;

@@ -24,9 +24,9 @@ void rotary_loop(uint32_t msec) {
   rotary.state = digitalRead(ROTARY_PIN_1);
   if (rotary.state != rotary.last_state) {
     if (digitalRead(ROTARY_PIN_2) != rotary.state) {
-      --rotary.value;
+      rotary.value -= ROTARY_STEP;
     } else {
-      ++rotary.value;
+      rotary.value += ROTARY_STEP;
     }
     rotary.last_state = rotary.state;
   }

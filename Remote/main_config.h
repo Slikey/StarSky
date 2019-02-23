@@ -4,7 +4,7 @@
 
 #define WIFI_RESET_ON_BOOT
 #define WIFI_AP_SSID "Sternhimmel-AP"
-#define WIFI_AP_PASSWORD "password"
+#define WIFI_AP_PASSWORD "123sternhimmel321"
 #define WIFI_AP_MAX_CONNECTIONS 4
 #define WIFI_AP_LOCAL_IP 192,168,4,1
 #define WIFI_AP_GATEWAY 192,168,4,0

@@ -52,7 +52,7 @@ static void button_handle(uint32_t msec, button_t *button) {
   if (button->state != button->last_state) {
     if (button->state) button->pressed = true;
     button->last_state = button->state;
-    button->next_time = msec + 500;
+    button->next_time = msec + 200;
   }
 }
 
