@@ -79,7 +79,22 @@ RgbwColor mode_sparkle_color(uint16_t index) {
   return RgbwColor(0, 0, 0, val);
 }
 
-// 
+//
+// None
+//
+starmode_t mode_none;
+
+void mode_none_setup() {
+}
+
+void mode_none_loop(uint32_t msec) {
+}
+
+RgbwColor mode_none_color(uint16_t index) {
+  return RgbwColor(0, 0, 0, 0);
+}
+
+//
 // Bake
 //
 
@@ -87,17 +102,23 @@ starmode_t *starmode_modes[LIGHT_STARS_MODES];
 
 void light_modes_setup() {
   starmode_t *mode;
-  
+
   mode = (starmode_t *) &mode_rainbow;
   mode->setup = mode_rainbow_setup;
   mode->loop = mode_rainbow_loop;
   mode->color = mode_rainbow_color;
   starmode_modes[0] = mode;
-  
+
   mode = (starmode_t *) &mode_sparkle;
   mode->setup = mode_sparkle_setup;
   mode->loop = mode_sparkle_loop;
   mode->color = mode_sparkle_color;
   starmode_modes[1] = mode;
+
+  mode = (starmode_t *) &mode_none;
+  mode->setup = mode_none_setup;
+  mode->loop = mode_none_loop;
+  mode->color = mode_none_color;
+  starmode_modes[2] = mode;
 }
 

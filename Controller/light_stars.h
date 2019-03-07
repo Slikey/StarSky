@@ -10,30 +10,28 @@ struct light_stars_t {
   bool last_enabled;
   NeoPixelBus<LIGHT_STARS_COLOR, LIGHT_STARS_METHOD> *strip;
   starmode_t **modes;
-  uint8_t modes_c;
 } light_stars;
 
-void light_stars_setup(starmode_t **modes, uint8_t modes_c) {
+void light_stars_setup(starmode_t **modes) {
   Sprintln("[LightStars] Pin: RX");
   light_stars.strip = new NeoPixelBus<LIGHT_STARS_COLOR, LIGHT_STARS_METHOD>(LIGHT_STARS_NUM);
   light_stars.last_update = millis();
   light_stars.last_enabled = storage_is_enabled();
   light_stars.modes = modes;
-  light_stars.modes_c = modes_c;
-  for (uint8_t i = 0; i < modes_c; ++i) {
+  for (uint8_t i = 0; i < LIGHT_STARS_MODES; ++i) {
     modes[i]->setup();
   }
   light_stars.strip->Begin();
 }
 
 void light_stars_loop(uint32_t msec) {
-  if (light_stars.modes_c == 0) return;
+  if (LIGHT_STARS_MODES == 0) return;
   if (storage_is_enabled()) {
     if (!light_stars.last_enabled)
       Sprintln("[LightStars] Enabled");
     // select star mode and reset if out of bounds
     uint8_t mode_idx = storage_get_starmode();
-    if (mode_idx >= light_stars.modes_c)
+    if (mode_idx >= LIGHT_STARS_MODES)
       storage_set_starmode(mode_idx = 0);
     starmode_t *mode = light_stars.modes[mode_idx];
 

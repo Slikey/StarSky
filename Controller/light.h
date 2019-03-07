@@ -10,7 +10,7 @@
 void light_setup() {
   light_modes_setup();  
   light_array_setup();
-  light_stars_setup(starmode_modes, 2);
+  light_stars_setup(starmode_modes);
   light_backlight_setup();
   light_spots_setup();
 }
